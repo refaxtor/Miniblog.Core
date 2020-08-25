@@ -63,8 +63,8 @@ namespace Miniblog.Core.Controllers
 
             xml.WriteStartElement("service");
 
-            xml.WriteElementString("enginename", "Miniblog.Core");
-            xml.WriteElementString("enginelink", "http://github.com/madskristensen/Miniblog.Core/");
+            xml.WriteElementString("enginename", "Miniblog.Core-Refaxtor");
+            xml.WriteElementString("enginelink", "https://github.com/refaxtor/Miniblog.Core");
             xml.WriteElementString("homepagelink", host);
 
             xml.WriteStartElement("apis");
@@ -112,7 +112,7 @@ namespace Miniblog.Core.Controllers
                     item.AddCategory(new SyndicationCategory(category));
                 }
 
-                item.AddContributor(new SyndicationPerson("test@example.com", this.settings.Value.Owner));
+                // item.AddContributor(new SyndicationPerson("test@example.com", this.settings.Value.Owner));
                 item.AddLink(new SyndicationLink(new Uri(item.Id)));
 
                 await writer.Write(item).ConfigureAwait(false);
@@ -154,7 +154,7 @@ namespace Miniblog.Core.Controllers
                 var rss = new RssFeedWriter(xmlWriter);
                 await rss.WriteTitle(this.manifest.Name).ConfigureAwait(false);
                 await rss.WriteDescription(this.manifest.Description).ConfigureAwait(false);
-                await rss.WriteGenerator("Miniblog.Core").ConfigureAwait(false);
+                await rss.WriteGenerator("Miniblog.Core-Refaxtor").ConfigureAwait(false);
                 await rss.WriteValue("link", host).ConfigureAwait(false);
                 return rss;
             }
@@ -163,7 +163,7 @@ namespace Miniblog.Core.Controllers
             await atom.WriteTitle(this.manifest.Name).ConfigureAwait(false);
             await atom.WriteId(host).ConfigureAwait(false);
             await atom.WriteSubtitle(this.manifest.Description).ConfigureAwait(false);
-            await atom.WriteGenerator("Miniblog.Core", "https://github.com/madskristensen/Miniblog.Core", "1.0").ConfigureAwait(false);
+            await atom.WriteGenerator("Miniblog.Core-Refaxtor", "https://github.com/refaxtor/Miniblog.Core", "1.0").ConfigureAwait(false);
             await atom.WriteValue("updated", updated.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)).ConfigureAwait(false);
             return atom;
         }

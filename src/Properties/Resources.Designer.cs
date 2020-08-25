@@ -106,7 +106,7 @@ namespace Miniblog.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Miniblog.Core.
+        ///   Looks up a localized string similar to Miniblog.Core-Refaxtor.
         /// </summary>
         public static string MiniblogCore {
             get {

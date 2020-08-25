@@ -1,4 +1,4 @@
-﻿@model Post
+@model Post
 @{
     var isNew = string.IsNullOrEmpty(Model.Title);
     ViewData[Constants.Title] = "Edit " + (Model.Title ?? "new post");
@@ -7,7 +7,7 @@
 }
 
 @section Head {
-    <link rel="stylesheet" href="~/css/admin.scss" />
+    <link rel="stylesheet" href="~/css/admin.css" />
 }
 
     <form method="post" id="edit" class="container" asp-controller="Blog" asp-action="UpdatePost">

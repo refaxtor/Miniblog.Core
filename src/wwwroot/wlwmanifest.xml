@@ -20,11 +20,11 @@
     <fileUploadNameFormat>{FileName}</fileUploadNameFormat>
   </options>
   <weblog>
-    <ServiceName>MiniBlog.Core</ServiceName>
+    <ServiceName>MiniBlog.Core-Refaxtor</ServiceName>
     <imageUrl>img/icon16x16.png</imageUrl>
     <watermarkImageUrl>img/icon16x16.png</watermarkImageUrl>
-    <homepageLinkText>View your blog</homepageLinkText>
-    <adminLinkText>Manage your blog</adminLinkText>
-    <adminUrl><![CDATA[{blog-homepage-url}/login/]]></adminUrl>
+    <homepageLinkText>http://www.refaxtor.com</homepageLinkText>
+    <adminLinkText>http://www.refaxtor.com/</adminLinkText>
+    <adminUrl><![CDATA[http://www.refaxtor.com/login/]]></adminUrl>
   </weblog>
 </manifest>
