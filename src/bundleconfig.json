@@ -1,0 +1,16 @@
+[
+  {
+    "outputFileName": "wwwroot/css/_app.css",
+    "inputFiles": [
+      "wwwroot/css/site.css",
+      "wwwroot/lib/prism/prism.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/_app.js",
+    "inputFiles": [
+      "wwwroot/lib/prism/prism.js",
+      "wwwroot/js/scripts.js"
+    ]
+  }
+]

@@ -12,50 +12,36 @@
 	<link rel="canonical" href="@(host + Model.GetLink())" />
 }
 
-<article class="post container" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-	<header class="post-header">
-		@*<img width="48" height="48" alt="Eric Ferraiuolo&#x27;s avatar" class="post-avatar" src="/img/common/ericf-avatar.png" />*@
+<li class="post-stub" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+	<a href="@Model.GetLink()">
+		<h4 class="post-stub-title" itemprop="name headline">@Model.Title</h4> / <time datetime="@Model.PubDate.ToString("s")" itemprop="datePublished">Published @Model.PubDate.ToString("MMM d, yyyy")</time> @*by @settings.Value.Owner*@
+	</a>
 
-		<h2 class="post-title" itemprop="name headline"><a href="@Model.GetLink()" rel="canonical" itemprop="url">@Model.Title</a></h2>
-	</header>
+	@*<img src="/img/banner.jpg" style="width: 100%; margin: 0;" />*@
 
-	<p class="post-meta">
-		<time datetime="@Model.PubDate.ToString("s")" itemprop="datePublished">Published @Model.PubDate.ToString("MMM d, yyyy")</time> by @settings.Value.Owner
-
-		@if (Model.Categories.Any())
+	<div class="post-description" itemprop="articleBody mainEntityOfPage name" cdnify>
+		@if (showFullPost || settings.Value.ListView == PostListView.FullPosts)
 		{
-			<text> in </text>
-			@foreach (string cat in Model.Categories)
-			{
-				<a asp-controller="Blog" asp-action="Category" asp-route-category="@cat.ToLowerInvariant()" asp-route-page="" class="post-category" itemprop="articleSection">@cat</a>
-			}
-			<text> and has </text>
+			<hr />
+
+			@Html.Raw(Model.RenderContent())
+
+			<hr />
 		}
+		else if (settings.Value.ListView == PostListView.TitlesAndExcerpts)
+		{
+			<p class="post-stub-description">@Html.Raw(Model.Excerpt)</p>
+		}
+	</div>
 
-		<a href="@Model.GetLink()#comments" itemprop="discussionUrl" title="Go to the comments section">
-			<span itemprop="commentCount">@Model.Comments.Count</span> @(Model.Comments.Count == 1 ? "comment" : "comments")
-		</a>
-
-		<meta itemprop="author" content="@settings.Value.Owner" />
-		<meta itemprop="dateModified" content="@Model.LastModified.ToString("s")" />
-		<meta itemprop="mainEntityOfPage" content="@(host + Model.GetLink())" />
-	</p>
+	<meta itemprop="author" content="@settings.Value.Owner" />
+	<meta itemprop="dateModified" content="@Model.LastModified.ToString("s")" />
+	<meta itemprop="mainEntityOfPage" content="@(host + Model.GetLink())" />
 
 	@if (User.Identity.IsAuthenticated)
 	{
 		<a asp-controller="Blog" asp-action="edit" asp-route-id="@Model.ID" title="Edit the post">Edit post</a>
 	}
-
-	<div class="post-description" itemprop="articleBody mainEntityOfPage" cdnify>
-		@if (showFullPost || settings.Value.ListView == PostListView.FullPosts)
-		{
-			@Html.Raw(Model.RenderContent())
-		}
-		else if (settings.Value.ListView == PostListView.TitlesAndExcerpts)
-		{
-			@Html.Raw(Model.Excerpt)
-		}
-	</div>
 
 	@if (showFullPost)
 	{
@@ -71,21 +57,15 @@
 		}
 	}
 
-	@if (User.Identity.IsAuthenticated)
-	{
-		@section Scripts {
-			<script src="~/js/admin.js" async defer></script>
-			<link rel="stylesheet" href="~/css/admin.css" />
-		}
+</li>
+
+@if (User.Identity.IsAuthenticated)
+{
+	@section Scripts {
+		<script src="~/js/admin.js" async defer></script>
+		<link rel="stylesheet" href="~/css/admin.css" />
 	}
-
-</article>
-
-
-
-
-
-
+}
 
 
 

@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\css\styles.css" />
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\_app.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,10 +49,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\css\styles.css" />
   </ItemGroup>
 
 </Project>
