@@ -9,7 +9,7 @@
 			<article id="@comment.ID" class="pure-g @(comment.IsAdmin ? "admin" : null)" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="pure-u">
 					<figure class="gravatar">
-						<img alt="@comment.Author" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="@comment.GetGravatar()" />
+						<img alt="@comment.Author" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" height="64" width="64" data-src="@comment.GetGravatar()" style="border: solid 1px #eee;" />
 					</figure>
 				</div>
 

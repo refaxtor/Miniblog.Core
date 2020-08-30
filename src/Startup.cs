@@ -19,7 +19,7 @@ namespace Miniblog.Core
     using WilderMinds.MetaWeblog;
 
     using IWmmLogger = WebMarkupMin.Core.Loggers.ILogger;
-    using MetaWeblogService = Miniblog.Core.Services.MetaWeblogService;
+    using MetaWeblogService = Services.MetaWeblogService;
     using WmmNullLogger = WebMarkupMin.Core.Loggers.NullLogger;
 
     public class Startup
@@ -35,7 +35,7 @@ namespace Miniblog.Core
                     {
                         webBuilder
                             .UseStartup<Startup>()
-                            .ConfigureKestrel(options => options.AddServerHeader = false);
+                            .ConfigureKestrel(options => { options.AddServerHeader = false; options.AllowSynchronousIO = true; });
                     });
 
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
@@ -61,8 +61,7 @@ namespace Miniblog.Core
                     return next();
                 });
 
-            app.UseStatusCodePagesWithReExecute("/Shared/Error");
-            app.UseWebOptimizer();
+            // app.UseStatusCodePagesWithReExecute("/Shared/Error");
 
             app.UseStaticFilesWithCache();
 
@@ -141,16 +140,8 @@ namespace Miniblog.Core
                         options.MinificationSettings.RemoveOptionalEndTags = false;
                         options.MinificationSettings.WhitespaceMinificationMode = WhitespaceMinificationMode.Safe;
                     });
-            services.AddSingleton<IWmmLogger, WmmNullLogger>(); // Used by HTML minifier
 
-            // Bundling, minification and Sass transpilation (https://github.com/ligershark/WebOptimizer)
-            services.AddWebOptimizer(
-                pipeline =>
-                {
-                    pipeline.MinifyJsFiles();
-                    pipeline.CompileScssFiles()
-                            .InlineImages(1);
-                });
+            services.AddSingleton<IWmmLogger, WmmNullLogger>(); // Used by HTML minifier
         }
     }
 }

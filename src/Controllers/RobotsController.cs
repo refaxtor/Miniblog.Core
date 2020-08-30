@@ -83,39 +83,46 @@ namespace Miniblog.Core.Controllers
         [Route("/feed/{type}")]
         public async Task Rss(string type)
         {
-            this.Response.ContentType = "application/xml";
-            var host = $"{this.Request.Scheme}://{this.Request.Host}";
-
-            using var xmlWriter = XmlWriter.Create(
-                this.Response.Body,
-                new XmlWriterSettings() { Async = true, Indent = true, Encoding = new UTF8Encoding(false) });
-            var posts = this.blog.GetPosts(10);
-            var writer = await this.GetWriter(
-                type,
-                xmlWriter,
-                await posts.MaxAsync(p => p.PubDate)).ConfigureAwait(false);
-
-            await foreach (var post in posts)
+            try
             {
-                var item = new AtomEntry
-                {
-                    Title = post.Title,
-                    Description = post.Content,
-                    Id = host + post.GetLink(),
-                    Published = post.PubDate,
-                    LastUpdated = post.LastModified,
-                    ContentType = "html",
-                };
+                this.Response.ContentType = "application/xml";
+                var host = $"{this.Request.Scheme}://{this.Request.Host}";
 
-                foreach (var category in post.Categories)
+                using var xmlWriter = XmlWriter.Create(
+                    this.Response.Body,
+                    new XmlWriterSettings() { Async = true, Indent = true, Encoding = new UTF8Encoding(false) });
+                var posts = this.blog.GetPosts(10);
+                var writer = await this.GetWriter(
+                    type,
+                    xmlWriter,
+                    await posts.MaxAsync(p => p.PubDate)).ConfigureAwait(false);
+
+                await foreach (var post in posts)
                 {
-                    item.AddCategory(new SyndicationCategory(category));
+                    var item = new AtomEntry
+                    {
+                        Title = post.Title,
+                        Description = post.Content,
+                        Id = host + post.GetLink(),
+                        Published = post.PubDate,
+                        LastUpdated = post.LastModified,
+                        ContentType = "html",
+                    };
+
+                    foreach (var category in post.Categories)
+                    {
+                        item.AddCategory(new SyndicationCategory(category));
+                    }
+
+                    // item.AddContributor(new SyndicationPerson("test@example.com", this.settings.Value.Owner));
+                    item.AddLink(new SyndicationLink(new Uri(item.Id)));
+
+                    await writer.Write(item).ConfigureAwait(false);
                 }
-
-                // item.AddContributor(new SyndicationPerson("test@example.com", this.settings.Value.Owner));
-                item.AddLink(new SyndicationLink(new Uri(item.Id)));
-
-                await writer.Write(item).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
 

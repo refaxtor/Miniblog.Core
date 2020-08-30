@@ -13,16 +13,16 @@ h3 { font-weight: 100; }
 
 #layout { padding: 0; }
 
-.header { top: auto; margin: 3em auto; }
+.header { top: auto; margin: 3em auto; padding-left: 10px; }
 
-.sidebar { background-color: #1f1f1f; color: #fff; }
+.sidebar { background-color: #1f1f1f; color: #fff; background-image: url("/img/sidebar.jpg"); background-size: 100%; }
 
 .brand-title,
 .brand-tagline { margin: 0; }
 .brand-title { text-transform: uppercase; }
-.brand-tagline { margin: 0; font-weight: 300; color: #fff; }
+.brand-tagline { margin: 0; font-weight: 300; color: #fff; font-style: italic; }
 
-.brand-title a { text-decoration: none; color: #ddd; }
+.brand-title a { text-decoration: none; color: #fff; }
 .brand-title a:hover,
 .brand-title a:focus { text-decoration: underline; }
 
