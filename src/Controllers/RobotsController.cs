@@ -120,7 +120,7 @@ namespace Miniblog.Core.Controllers
                     await writer.Write(item).ConfigureAwait(false);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }

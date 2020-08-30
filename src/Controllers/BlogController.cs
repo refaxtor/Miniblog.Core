@@ -178,7 +178,7 @@ namespace Miniblog.Core.Controllers
 
         [Route("/about")]
         [OutputCache(Profile = "default")]
-        public async Task<IActionResult> About(string slug)
+        public IActionResult About()
         {
             return this.View();
         }
