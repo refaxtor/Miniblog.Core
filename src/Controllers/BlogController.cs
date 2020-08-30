@@ -176,6 +176,13 @@ namespace Miniblog.Core.Controllers
             return post is null ? this.NotFound() : (IActionResult)this.View(post);
         }
 
+        [Route("/about")]
+        [OutputCache(Profile = "default")]
+        public async Task<IActionResult> About(string slug)
+        {
+            return this.View();
+        }
+
         /// <remarks>This is for redirecting potential existing URLs from the old Miniblog URL format.</remarks>
         [Route("/post/{slug}")]
         [HttpGet]

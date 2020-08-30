@@ -61,7 +61,7 @@ namespace Miniblog.Core
                     return next();
                 });
 
-            // app.UseStatusCodePagesWithReExecute("/Shared/Error");
+            app.UseStatusCodePagesWithReExecute("/Shared/Error");
 
             app.UseStaticFilesWithCache();
 
@@ -112,7 +112,7 @@ namespace Miniblog.Core
                 {
                     options.Profiles["default"] = new OutputCacheProfile
                     {
-                        Duration = 1 //  3600
+                        Duration = 3600
                     };
                 });
 

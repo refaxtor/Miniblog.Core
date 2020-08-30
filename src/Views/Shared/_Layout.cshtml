@@ -21,8 +21,10 @@
 	@RenderSection(Constants.Preload, required: false)
 
 	<link rel="stylesheet" href="/css/_app.min.css" />
-	@*<link rel="stylesheet" href="/css/site.css" />
-		<link rel="stylesheet" href="/lib/prism/prism.css" />*@
+	@*
+	<link rel="stylesheet" href="/css/site.css" />
+	<link rel="stylesheet" href="/lib/prism/prism.css" />
+	*@
 
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content="@ViewData[Constants.Title]" />
@@ -47,6 +49,7 @@
 	<meta name="msapplication-TileColor" content="#ffffff" />
 </head>
 <body itemscope itemtype="http://schema.org/WebPage">
+	<a name="top"></a>
 	<div id="wrapper">
 		<header class="site-header">
 			<div class="container">
@@ -56,7 +59,7 @@
 					</li>
 
 					<li class="site-nav-item">
-						<a title="About" href="/blog/about">About</a>
+						<a title="About" href="/about">About</a>
 					</li>
 				</ul>
 			</div>
@@ -85,14 +88,14 @@
 		<div class="container">
 			<div class="site-title-wrapper">
 				<p class="footer-copyright">
-					&copy; @DateTime.Now.Year - @manifest.Name | <a href="#" title="Top"> ^ </a> |
+					&copy; @DateTime.Now.Year - <a href="/">@manifest.Name</a> | 
 
 					@{
 						string path = Context.Request.Path;
 
 						if (User.Identity.IsAuthenticated)
 						{
-							<a asp-controller="Blog" asp-action="Edit" asp-route-id="">@Miniblog.Core.Properties.Resources.NewPost</a>
+							<a asp-controller="Blog" asp-action="Edit" asp-route-id="">@Miniblog.Core.Properties.Resources.NewPost</a> <text> | </text> 
 							<a href="~/logout/" title="@Miniblog.Core.Properties.Resources.SignOutAsAdministrator">@Miniblog.Core.Properties.Resources.SignOut</a>
 						}
 						else
@@ -100,6 +103,9 @@
 							<a href="~/login/?returnUrl=@path" rel="nofollow" title="@Miniblog.Core.Properties.Resources.SignInAsAdministrator">@Miniblog.Core.Properties.Resources.SignIn</a>
 						}
 					}
+
+					<a href="#top" id="ToTop" title="Go to top">Top</a>
+
 				</p>
 			</div>
 		</div>
