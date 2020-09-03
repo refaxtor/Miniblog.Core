@@ -1,61 +1,59 @@
 @model Post
 @inject IOptionsSnapshot<BlogSettings> settings
 
-<section id="comments">
-	<div class="container">
-		<h2>Comments</h2>
-		@foreach (var comment in Model.Comments)
-		{
-			<article id="@comment.ID" class="@(comment.IsAdmin ? "admin" : null)" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
-				<h5 itemprop="name">@comment.Author on <a style="display: inline;" href="#@comment.ID" title="Permalink (#@comment.ID)">@comment.PubDate.ToString("MMMM d, yyyy")</a></h5>
-				<p itemprop="text">
-					@comment.RenderContent() <time datetime="@comment.PubDate.ToString("s")" itemprop="datePublished" />
-				</p>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<a class="noline" href="mailto:@comment.Email" title="Send email to @comment.Email">&#x2709;</a>
-					<a class="delete noline" asp-controller="Blog" asp-Action="DeleteComment" asp-route-postid="@Model.ID" asp-route-commentid="@comment.ID" asp-route-afrt="@ViewData["afrt"]" title="Delete the comment...">Delete...</a>
-				}
-			</article>
-
-			<hr />
-		}
-
-		@if (Model.AreCommentsOpen(settings.Value.CommentsCloseAfterDays))
-		{
-			if (Model.Comments.Count == 0)
+<div class="w3-container">
+	<h2>Comments</h2>
+	@foreach (var comment in Model.Comments)
+	{
+		<article id="@comment.ID" class="@(comment.IsAdmin ? "w3-pale-green" : "w3-white") w3-padding" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<h3 itemprop="name">@comment.Author on <a style="display: inline;" href="#@comment.ID" title="Permalink (#@comment.ID)">@comment.PubDate.ToString("MMMM d, yyyy")</a></h3>
+			<p itemprop="text">
+				@comment.RenderContent() <time datetime="@comment.PubDate.ToString("s")" itemprop="datePublished" />
+			</p>
+			@if (User.Identity.IsAuthenticated)
 			{
-				<p>Be the first to post a comment</p>
+				<a class="noline" href="mailto:@comment.Email" title="Send email to @comment.Email">&#x2709;</a>
+				<a class="delete noline" asp-controller="Blog" asp-Action="DeleteComment" asp-route-postid="@Model.ID" asp-route-commentid="@comment.ID" asp-route-afrt="@ViewData["afrt"]" title="Delete the comment...">Delete...</a>
 			}
+		</article>
 
-			<form method="post" asp-controller="Blog" asp-action="AddComment" asp-route-postid="@Model.ID" asp-antiforgery="false">
-				<label for="content">Comment</label>
-				<textarea id="content" name="content" rows="5" cols="100" onfocus="" required placeholder="Enter your comment here..."></textarea>
+		<hr />
+	}
 
-				<div class="details">
-					<label for="author">Name</label>
-					<input id="author" name="author" placeholder="Your name" required />
-
-					<label for="email">E-mail</label>
-					<input id="email" name="email" placeholder="Your Email Address" required />
-					<br />
-
-					<input type="submit" value="Post comment" />
-
-					<!-- This element is being removed by site.js. It is to prevent comment spam-->
-					<input type="hidden" name="website" />
-				</div>
-			</form>
-
-			<noscript>
-				<br />
-				<p>Enable JavaScript to post comments on this blog.</p>
-			</noscript>
-		}
-		else
+	@if (Model.AreCommentsOpen(settings.Value.CommentsCloseAfterDays))
+	{
+		if (Model.Comments.Count == 0)
 		{
-			<br />
-			<p>Comments are closed</p>
+			<p>Be the first to post a comment</p>
 		}
-	</div>
-</section>
+
+		<form method="post" asp-controller="Blog" asp-action="AddComment" asp-route-postid="@Model.ID" asp-antiforgery="false">
+			<label for="content">Comment</label>
+			<textarea id="content" name="content" rows="5" cols="100" onfocus="" required placeholder="Enter your comment here..."></textarea>
+
+			<div class="details">
+				<label for="author">Name</label>
+				<input id="author" name="author" placeholder="Your name" required />
+
+				<label for="email">E-mail</label>
+				<input id="email" name="email" placeholder="Your Email Address" required />
+				<br />
+
+				<input type="submit" value="Post comment" />
+
+				<!-- This element is being removed by site.js. It is to prevent comment spam-->
+				<input type="hidden" name="website" />
+			</div>
+		</form>
+
+		<noscript>
+			<br />
+			<p>Enable JavaScript to post comments on this blog.</p>
+		</noscript>
+	}
+	else
+	{
+		<br />
+		<p>Comments are closed</p>
+	}
+</div>

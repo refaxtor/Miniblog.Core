@@ -2,7 +2,7 @@
   {
     "outputFileName": "wwwroot/css/_app.css",
     "inputFiles": [
-      "wwwroot/css/site.css",
+      "wwwroot/css/w3.css",
       "wwwroot/lib/prism/prism.css"
     ]
   },

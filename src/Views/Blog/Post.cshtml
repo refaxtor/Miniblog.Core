@@ -11,53 +11,64 @@
 	<link rel="canonical" href="@(host + Model.GetLink())" />
 }
 
-<li class="post-stub" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-	<a href="@Model.GetLink()">
-		<h4 class="post-stub-title" itemprop="name headline">@Model.Title</h4> / <time datetime="@Model.PubDate.ToString("s")" itemprop="datePublished">Published @Model.PubDate.ToString("MMM d, yyyy")</time> @*by @settings.Value.Owner*@
-	</a>
 
-	@*<img src="/img/banner.jpg" style="width: 100%; margin: 0;" />*@
+<div class="w3-margin w3-white custom-leftbar" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+	@*<a href="@Model.GetLink()">
+		<img src="/img/post-backgrounds/@(Model.Slug).jpg" alt="Nature" style="width:100%" />
+	</a>*@
 
-	<div class="post-description" itemprop="articleBody mainEntityOfPage name" cdnify>
+	<div class="w3-container" itemprop="articleBody mainEntityOfPage name" cdnify>
+		<h2><a href="@Model.GetLink()">@Model.Title</a></h2>
+		<h3><span class="w3-opacity"><time datetime="@Model.PubDate.ToString("s")" itemprop="datePublished">Published @Model.PubDate.ToString("MMM d, yyyy")</time> @*by @settings.Value.Owner*@</span></h3>
+
 		@if (showFullPost || settings.Value.ListView == PostListView.FullPosts)
 		{
-			<hr />
-
 			@Html.Raw(Model.RenderContent())
-
-			<hr />
 		}
 		else if (settings.Value.ListView == PostListView.TitlesAndExcerpts)
 		{
-			<p class="post-stub-description">@Html.Raw(Model.Excerpt)</p>
+			<p>@Html.Raw(Model.Excerpt)</p>
 		}
+
+		<div class="w3-row">
+			<div class="w3-col m8 s12">
+				<p>
+
+				@if (!showFullPost)
+				{
+					<a href="@Model.GetLink()" class="w3-button w3-padding-large w3-indigo w3-text-white w3-border">Read More &raquo;</a>
+				}
+
+				@if (showFullPost && User.Identity.IsAuthenticated)
+				{
+					<a asp-controller="Blog" asp-action="edit" asp-route-id="@Model.ID" title="Edit the post" class="w3-button w3-padding-large w3-indigo w3-text-white w3-border">Edit post</a>
+				}
+
+				</p>
+
+			</div>
+			<div class="w3-col m4 w3-hide-small">
+				@*<p><span class="w3-padding-large w3-right"><b>Comments &nbsp;</b> <span class="w3-tag">0</span></span></p>*@
+			</div>
+		</div>
+
+		<meta itemprop="author" content="@settings.Value.Owner" />
+		<meta itemprop="dateModified" content="@Model.LastModified.ToString("s")" />
+		<meta itemprop="mainEntityOfPage" content="@(host + Model.GetLink())" />
 	</div>
+</div>
+<hr>
 
-	<meta itemprop="author" content="@settings.Value.Owner" />
-	<meta itemprop="dateModified" content="@Model.LastModified.ToString("s")" />
-	<meta itemprop="mainEntityOfPage" content="@(host + Model.GetLink())" />
-
-	@if (User.Identity.IsAuthenticated)
-	{
-		<a asp-controller="Blog" asp-action="edit" asp-route-id="@Model.ID" title="Edit the post">Edit post</a>
-	}
-
-	@if (showFullPost)
-	{
-		await Html.RenderPartialAsync("_SocialSharing", Model.Title);
-		await Html.RenderPartialAsync("Comments");
-
-		@section Preload {
-		}
-	}
-
-</li>
+@if (showFullPost)
+{
+	await Html.RenderPartialAsync("_SocialSharing", Model.Title);
+	await Html.RenderPartialAsync("Comments");
+}
 
 @if (User.Identity.IsAuthenticated)
 {
 	@section Scripts {
 		<script src="~/js/admin.js" async defer></script>
-		<link rel="stylesheet" href="~/css/admin.css" />
 	}
 }
 

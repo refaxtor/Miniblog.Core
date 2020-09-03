@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\css\_app.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="bundleconfig.json" />
   </ItemGroup>
 

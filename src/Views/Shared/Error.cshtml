@@ -1,4 +1,4 @@
-﻿@model int
+@model int
 @{
     var statusCode = Model;
     var statusmessage = string.Empty;
@@ -27,7 +27,7 @@
     ViewData[Constants.Title] = statusmessage;
 }
 
-<div class="container">
+<div class="w3-container">
     <h1>@Miniblog.Core.Properties.Resources.Error @Model</h1>
     <p>@statusmessage</p>
 </div>

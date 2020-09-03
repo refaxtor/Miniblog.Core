@@ -4,21 +4,29 @@
     ViewData[Constants.Description] = Miniblog.Core.Properties.Resources.SignInToTheWebsite;
 }
 
-@section head {
-    <link rel="stylesheet" href="~/css/login.css" />
-}
-
 <form method="post" id="login" aria-labelledby="legend" asp-route-returnUrl="@ViewData[Constants.ReturnUrl]">
     <div asp-validation-summary="All"></div>
     <fieldset>
         <legend id="legend">Sign in</legend>
 
-        <input asp-for="UserName" aria-label="Username" autofocus required placeholder="Username" />
-        <input asp-for="Password" aria-label="Password" required placeholder="Password" />
+		<p>
+			<label>Username</label>
+			<input asp-for="UserName" aria-label="Username" autofocus required placeholder="Username" class="w3-input w3-border w3-padding-bottom" />
+		</p>
 
-        <input asp-for="RememberMe" />
-        <label asp-for="RememberMe">Remember me</label>
+		<p>
+			<label>Password</label>
+			<input asp-for="Password" aria-label="Password" required placeholder="Password" class="w3-input w3-border" />
+		</p>
 
-        <input type="submit" value="Sign in" />
+		<p>
+			<label asp-for="RememberMe">Remember me</label>
+			<input asp-for="RememberMe" />
+		</p>
+
+		<p>
+			<input type="submit" value="Sign in" class="w3-button w3-padding-large w3-indigo w3-text-white w3-border" />
+		</p>
+
     </fieldset>
 </form>
