@@ -28,22 +28,24 @@
 		}
 
 		<form method="post" asp-controller="Blog" asp-action="AddComment" asp-route-postid="@Model.ID" asp-antiforgery="false">
-			<label for="content">Comment</label>
-			<textarea id="content" name="content" rows="5" cols="100" onfocus="" required placeholder="Enter your comment here..."></textarea>
+			<p>
+				<label for="content">Comment</label>
+				<textarea id="content" name="content" rows="5" cols="100" onfocus="" required placeholder="Enter your comment here..." class="w3-input w3-border"></textarea>
+			</p>
 
-			<div class="details">
+			<p>
 				<label for="author">Name</label>
-				<input id="author" name="author" placeholder="Your name" required />
-
+				<input id="author" name="author" placeholder="Your name" class="w3-input w3-border" required />
+			</p>
+			<p>
 				<label for="email">E-mail</label>
-				<input id="email" name="email" placeholder="Your Email Address" required />
-				<br />
-
-				<input type="submit" value="Post comment" />
-
-				<!-- This element is being removed by site.js. It is to prevent comment spam-->
-				<input type="hidden" name="website" />
-			</div>
+				<input id="email" name="email" placeholder="Your Email Address" class="w3-input w3-border" required />
+			</p>
+			<p>
+				<input type="submit" value="Post comment" class="w3-button w3-indigo w3-text-white" />
+			</p>
+			<!-- This element is being removed by site.js. It is to prevent comment spam-->
+			<input type="hidden" name="website" />
 		</form>
 
 		<noscript>
